@@ -42,7 +42,9 @@ Make sure you have the following dependencies installed before running the appli
 
 ## Contributing
 
-If you would like to contribute to this project, feel free to fork the repository and submit a pull request. Any contributions are welcome!
+If you would like to contribute to this project, feel free to fork the repository and submit a pull request. Any contributions are welcome and accepted push requests will get your name added to this list!
+
+Jacob Crawford - [@JDCrawf](https://github.com/JDCrawf)
 
 ##  License
 
