@@ -46,9 +46,9 @@ If you would like to contribute to this project, feel free to fork the repositor
 
 ##  License
 
-This project is licensed under the [.LICENSE](MIT License).
-Tkinter: Python Software Foundation License (included with Python installations).
-Socket.IO: MIT License. See [Socket.IO License](https://github.com/miguelgrinberg/python-socketio/blob/main/LICENSE) for details.
+- This project is licensed under the [LICENSE](MIT License).
+- Tkinter: Python Software Foundation License (included with Python installations).
+- Socket.IO: MIT License. See [Socket.IO License](https://github.com/miguelgrinberg/python-socketio/blob/main/LICENSE) for details.
 
 ## Acknowledgments
 
