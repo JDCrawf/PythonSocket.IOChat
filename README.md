@@ -20,21 +20,21 @@ Make sure you have the following dependencies installed before running the appli
 
 1. Clone the repository:
 
-		```bash
-		git clone https://github.com/JDCrawf/PythonSocket.IOChat.git
-		```
+	```bash
+	git clone https://github.com/JDCrawf/PythonSocket.IOChat.git
+	```
 
 2. Navigate to the project directory:
 
-		```bash
-		cd python-chat-app
-		```
+	```bash
+	cd python-chat-app
+	```
 
 3. Run the application:
 
-		```bash
-		python chat_app.py
-		```
+	```bash
+	python chat_app.py
+	```
 
 4. The chat app window will open. Enter your desired username and connect to the chat room.
 
