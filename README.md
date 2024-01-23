@@ -6,18 +6,37 @@ This is a simple chat application built using Python, Socket.IO, and Tkinter. It
 
 - Real-time messaging using Socket.IO
 - User-friendly graphical interface with Tkinter
-- Simple and easy-to-use chat room functionality
+- Customizable and easy-to-use chat room functionality
+
+### Client Features
+- Save profile/application information
+	- Username
+	- Message Color
+	- Prefered Font
+  	- Themes
+	- etc...
+- Save servers for quick access
+- Send/Recieve messages with whichever server you connected to
+
+### Server Features
+- View messages being sent through your server
+- Set Server information
+  	- Server Name
+  	- Join Message
+  	- Message of the Day
+  	- etc...
+- Send server notices to all connected clients
+- Remove/Edit messages sent by clients(will contain notifier that message was edited by server)
+- Disconnect/Block troublemaking clients
 
 ## Requirements
 
 Make sure you have the following dependencies installed before running the application:
-
 - Python 3.x
 - socketio library (install using `pip install python-socketio`)
 - tkinter library (install using `pip install tk`)
 
 ## Usage
-
 1. Clone the repository:
 
 	```bash
@@ -30,15 +49,31 @@ Make sure you have the following dependencies installed before running the appli
 	cd python-chat-app
 	```
 
+### For Server Host
 3. Run the application:
 
 	```bash
-	python chat_app.py
+ 	py server.py
+ 	```
+
+4. The Server app window will open.
+	- If this is your first time launching the app, it will ask you to enter a Port number
+
+5. Clients can now connect to your chat server through your IP and Port
+
+### For Clients
+3. Run the application:
+
+	```bash
+	py client.py
 	```
 
-4. The chat app window will open. Enter your desired username and connect to the chat room.
+4. The Chat app window will open.
+	- If this is your first time launching the app, it will ask you to enter a username which can be changed at any time
 
-5. Start chatting with other users in real-time!
+5. Connect to a sever by IP or by selecting a saved server from the Server Menu
+
+6. Start chatting with other users in real-time!
 
 ## Contributing
 
