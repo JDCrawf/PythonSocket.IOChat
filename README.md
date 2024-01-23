@@ -13,22 +13,22 @@ This is a simple chat application built using Python, Socket.IO, and Tkinter. It
 Make sure you have the following dependencies installed before running the application:
 
 - Python 3.x
-- socketio library (install using pip install python-socketio)
-- tkinter library (usually included with Python installations)
+- socketio library (install using `pip install python-socketio`)
+- tkinter library (install using `pip install tk`)
 
 ## Usage
 
 1. Clone the repository:
 
-'git clone https://github.com/yourusername/python-chat-app.git'
+  `git clone https://github.com/JDCrawf/PythonSocket.IOChat.git`
 
 2. Navigate to the project directory:
 
-'cd python-chat-app'
+  `cd python-chat-app`
 
 3. Run the application:
 
-'python chat_app.py'
+  `python chat_app.py`
 
 4. The chat app window will open. Enter your desired username and connect to the chat room.
 
