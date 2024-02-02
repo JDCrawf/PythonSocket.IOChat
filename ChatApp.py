@@ -2,19 +2,25 @@ import random
 import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import ttk
+from tkinter import PhotoImage
 import json
 
 class ChatApp:
     def __init__(self):
         self.root = tk.Tk()
-        self.root.title("Python Chat App")
-        self.root.resizable(False, False)
+        self.root.title("Python Chat App - Client")
+        self.root.resizable(False, False) # At least for now, i don't want to deal with resizing and weights yet
 
-        # Initialize instance attributes for widgets
+        # Important tkinter widgets
         self.username_label = None # Set this to whatever is saved in the JSON file
         self.server_name_label = None # Retrieve this from server
         self.chat_log = None # The server will send this to the client to be appended to the chat_log
         self.entry_box = None # The messages that the client sends to the server
+        
+        # Icons
+        # refresh icon is from https://www.flaticon.com/packs/font-awesome by Dave Gandy
+        # TODO: lets try and only use icons from the font-awesome library, also we need to update the README for icon attribution mentions
+        self.refresh_icon = PhotoImage(file="img\\refresh.png")
 
         # Build the GUI
         self.build_window()
@@ -56,15 +62,14 @@ class ChatApp:
 
         return _menu_frame
 
-    def build_profile(self, frame):
+    def build_server_info(self, frame):
         '''
-            Builds and returns the profile frame for the application.
-            Profile information will be retrieved from a local file and displayed in the returned frame.
-            This will display the profile information in the returned frame.
+            Builds and returns the server info frame for the application.
+            Server information will be retrieved from the connected server and updated periodically
             @param _frame: The root frame of the application.
             @return: The profile frame for the application.	
         '''
-        return tk.Frame(frame, width=200, height=150, bd=2, relief=tk.SUNKEN) 
+        return tk.Frame(frame, width=200, height=150, bd=2, relief=tk.RAISED) 
 
     def build_server_view(self, frame):
         '''
@@ -73,33 +78,32 @@ class ChatApp:
             @param _frame: The root frame of the application.
             @return: The server view frame for the application.
         '''
-        _server_list = tk.Frame(frame, width=200, height=350, bd=2, relief=tk.SUNKEN)
+        _server_list = tk.Frame(frame, width=200, height=350)
 
         # Just a label so the user knows that this is a list of servers
         server_label = tk.Label(_server_list, text="Saved Servers", anchor='w', height=1)
         server_label.grid(column=0, row=0, sticky='NSW')
         
+        # Refresh server list button
+        server_refresh_button = tk.Button(_server_list, text="", image=self.refresh_icon)
+        server_refresh_button.grid(column=1, row=0, sticky='NSEW', pady=2)
+
         # The list of servers with nested information
-        tree = ttk.Treeview(_server_list, columns=("Status"), show="tree")
-        tree.column("#0", width = 100)
-        tree.column("Status", width=100)
+        server_list = ttk.Treeview(_server_list, columns=("Status"), show="tree")
+        server_list.column("#0", width = 100)
+        server_list.column("Status", width=100)
 
-        # Insert dummy data into the TreeView
-        for i in range(1, 10):
-            server = tree.insert("", i, text=f"Server{i} Name", value="(ONLINE)")
-            tree.insert(server, i, text="Users:", value=random.randint(0,20))
-            tree.insert(server, i, text="MOTD:", value=f"Server{i}\ MOTD")
-        # end dummy data
-
-        scrollbar = ttk.Scrollbar(_server_list, orient="vertical", command=tree.yview)
+        
+        server = server_list.insert("", 0, text="[Server Name]", value="Unknown")
+        server_list.insert(server, 0, text="IP Address:", value="N/A")
+        server_list.insert(server, 1, text="Users:", value="N/A")
+        
+        scrollbar = ttk.Scrollbar(_server_list, orient="vertical", command=server_list.yview)
         scrollbar.grid(column=1, row=1, sticky='NES')
 
-        tree.configure(yscrollcommand=scrollbar.set)
+        server_list.configure(yscrollcommand=scrollbar.set)
 
-        tree.grid(column=0, row=1, sticky='NSEW')
-        
-        _server_list.columnconfigure(0, weight=1)
-        _server_list.rowconfigure(1, weight=1)
+        server_list.grid(column=0, row=1, sticky='NSEW')
         return _server_list
 
     def build_chat_log(self, frame):
@@ -112,13 +116,13 @@ class ChatApp:
 
         # Label to display current server's name
         # TODO: Replace "Server Name" string with variable call to retrieve the server name
-        self.server_name_label = tk.Label(_chat_frame, text="Server Name", anchor='w')
+        self.server_name_label = tk.Label(_chat_frame, text="[Server Name]", anchor='w')
         self.server_name_label.grid(column=0, row=0, sticky='NEW')
 
         # Messages sent to/from the server
         # The state is set to DISABLED to prevent editing on the client side
         # When the server sends a message, it will need to be set to NORMAL, add the new message, then reset it to DISABLED
-        self.chat_log= scrolledtext.ScrolledText(_chat_frame, width=50, height=28, state=tk.DISABLED)# height is in characters, not pixels -_-
+        self.chat_log= scrolledtext.ScrolledText(_chat_frame, width=50, height=20, state=tk.DISABLED)# height is in characters, not pixels -_-
         self.chat_log.grid(column=0, row=1, sticky='SEW')
 
         return _chat_frame
@@ -131,21 +135,21 @@ class ChatApp:
             @param _frame: The root frame of the application.
             @return: The text entry frame for the application.
         '''
-        _text_entry = tk.Frame(frame, width=400, height=20, bd=1, relief=tk.SUNKEN)
+        _text_entry = tk.Frame(frame, width=400, height=20)
         
         # Label to display client's Username
-        name_box = tk.Label(_text_entry, text="Username", width=10)
+        name_box = tk.Label(_text_entry, text="[Username]", width=10)
         name_box.grid(column=0, row=0, sticky='NSW')
 
         # Entry box to type message to send to server
         # This should take focus right after connecting to a server
         entry_box = tk.Entry(_text_entry, width=50)
-        entry_box.grid(column=1, row=0, sticky='NS')
+        entry_box.grid(column=1, row=0, sticky='NS',pady=2)
 
         # Button to send the message from the entry box to the server
         # Enter key should also send the message to the server
         send_button = tk.Button(_text_entry, text="Send")
-        send_button.grid(column=2, row=0, sticky='NSE')
+        send_button.grid(column=2, row=0, sticky='NSE', padx=4)
         return _text_entry
 
     def build_window(self):
@@ -160,7 +164,7 @@ class ChatApp:
         chat_frame.grid(row=0, column=1, sticky='NSE')
         #chat_frame.grid_propagate(False)
 
-        profile_frame = self.build_profile(info_frame)
+        profile_frame = self.build_server_info(info_frame)
         profile_frame.grid(row=0, column=0, sticky='NEW')
 
         server_frame = self.build_server_view(info_frame)
